@@ -117,6 +117,7 @@ const Navbar = () => {
                     Blog
                   </NavLink>
                 </li>
+                <input  title="Dark mode" type="checkbox" className="toggle toggle-lg" />
               </ul>
             </nav>
 
@@ -174,6 +175,7 @@ const Navbar = () => {
           <Link to="reviews">Reviews</Link>
           <Link to="contact">Contact Us</Link>
           <Link to="Blog">Blog</Link>
+          <input  title="Dark mode" type="checkbox" className="toggle mx-auto toggle-lg" />
         </div>
       </div>
     </header>

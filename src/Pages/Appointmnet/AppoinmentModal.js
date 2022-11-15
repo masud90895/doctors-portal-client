@@ -1,9 +1,10 @@
 import { format } from "date-fns";
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../AuthProvider/AuthProvider";
 
 const AppoinmentModal = ({ modal, selectedDate, setmodal }) => {
   const { name, slots } = modal;
-
+  const {user} = useContext(AuthContext)
   const handleModal = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -56,6 +57,7 @@ const AppoinmentModal = ({ modal, selectedDate, setmodal }) => {
               type="text"
               name="name"
               placeholder="Full Name"
+              defaultValue={user?.displayName}
               className="input border border-gray-400 w-full my-3   py-4  "
             />
             <input
@@ -68,6 +70,7 @@ const AppoinmentModal = ({ modal, selectedDate, setmodal }) => {
               type="email"
               placeholder="Email"
               name="email"
+              defaultValue={user?.email}
               className="input border border-gray-400 w-full my-3   py-4  "
             />
           </div>

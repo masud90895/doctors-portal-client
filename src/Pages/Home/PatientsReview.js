@@ -3,7 +3,7 @@ import React from "react";
 const PatientsReview = ({rv}) => {
     const {name,img,city,text} =rv;
   return (
-    <article className="rounded-xl border border-gray-300  shadow-xl  p-8">
+    <article className="rounded-xl hover:border hover:border-[#0FCFEC]  border border-gray-300  shadow-xl  p-8">
       <ul className="mt-4 space-y-2 ">
         <li className="text-left mb-4">
         <p>{text}</p>

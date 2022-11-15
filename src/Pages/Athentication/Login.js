@@ -6,7 +6,8 @@ import { AuthContext } from "../AuthProvider/AuthProvider";
 
 const Login = () => {
   const [error, setError] = useState("");
-  const { googleLogin, logInUser } = useContext(AuthContext);
+  const [forget, setForget] = useState("");
+  const { googleLogin, logInUser, resetPass } = useContext(AuthContext);
   const nagivate = useNavigate();
 
   const {
@@ -36,6 +37,17 @@ const Login = () => {
         console.log(user);
         toast.success("Account Create Successfully");
         nagivate("/");
+      })
+      .catch((err) => {
+        setError(err.message);
+        console.log(err);
+      });
+  };
+
+  const passwordForget = () => {
+    resetPass(forget)
+      .then((result) => {
+        toast.success("Password Reset Success..Check your Email Address");
       })
       .catch((err) => {
         setError(err.message);
@@ -79,8 +91,35 @@ const Login = () => {
             </p>
           )}
           {error && <p className="text-red-600 text-start">{error}</p>}
-          <p className="text-start my-3">Forgot Password ?</p>
-          <input className="btn w-full" type="submit" value="Login" />
+          <label
+            htmlFor="my-modal"
+            className="mr-[160px] md:mr-[190px] cursor-pointer"
+          >
+            Forgot Password ?
+          </label>
+          {/* modal */}
+          <div>
+            <input type="checkbox" id="my-modal" className="modal-toggle" />
+            <div className="modal text-start">
+              <div className="modal-box">
+                <h3 className="font-bold text-lg">Reset Password!</h3>
+                <input
+                  onChange={(e) => setForget(e.target.value)}
+                  type="text"
+                  className="py-4 mt-4 input input-bordered input-accent w-full"
+                  name="forget"
+                  id=""
+                  placeholder="Email...."
+                />
+                <div onClick={passwordForget} className="modal-action">
+                  <label htmlFor="my-modal" className="btn">
+                    forget
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <input className="btn w-full mt-3" type="submit" value="Login" />
         </form>
         <div className="flex gap-2 mt-4">
           <p>New to Doctors Portal?</p>
