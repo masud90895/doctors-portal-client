@@ -1,11 +1,14 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { UseToken } from "../../Hooks/UseToken";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 
 const Register = () => {
   const { createUser, googleLogin, updateName } = useContext(AuthContext);
+  const [createUserEmail, setCreateUserEmail] = useState("");
+  const [token] = UseToken(createUserEmail);
   const [error, setError] = useState("");
   const nagivate = useNavigate();
   const {
@@ -14,24 +17,24 @@ const Register = () => {
     handleSubmit,
   } = useForm();
 
+  if (token) {
+    nagivate("/");
+  }
+
   const handleRegister = (data) => {
     console.log(data);
     createUser(data.email, data.password)
       .then((result) => {
         const user = result.user;
         console.log(user);
-        const UserName = {
-          displayName: data.name,
-        };
-        console.log(UserName);
-        updateName(UserName)
+        updateName(data.name)
           .then(() => {})
           .catch((err) => {
             setError(err.message);
             console.log(err);
           });
         toast.success("Account Create Successfully");
-        nagivate("/");
+        handleSaveUser(data.name, data.email);
       })
       .catch((err) => {
         setError(err.message);
@@ -52,6 +55,33 @@ const Register = () => {
         console.log(err);
       });
   };
+
+  const handleSaveUser = (name, email) => {
+    const user = { name, email };
+    fetch("http://localhost:5000/users", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setCreateUserEmail(email);
+        console.log(data);
+      });
+  };
+
+  /*  const getUserToken=email=>{
+    fetch(`http://localhost:5000/jwt?email=${email}`)
+    .then(res=>res.json())
+    .then(data=>{
+      if(data.accessToken){
+        localStorage.setItem('accessToken', data.accessToken)
+        nagivate("/")
+      }
+    })
+  } */
 
   return (
     <div className=" h-screen flex justify-center items-center my-[100px] lg:my-0 w-[96%] mx-auto">
@@ -99,7 +129,6 @@ const Register = () => {
               },
             })}
           />
-          P
           {errors.password && (
             <p className="text-red-600 text-start">
               {errors.password?.message}
@@ -110,7 +139,9 @@ const Register = () => {
         </form>
         <div className="flex gap-2 mt-4">
           <p>Already have account?</p>
-          <button className="text-[#19D3AE] hover:underline">Login</button>
+          <Link to="/login">
+            <button className="text-[#19D3AE] hover:underline">Login</button>
+          </Link>
         </div>
         <div className="divider">OR</div>
         <button

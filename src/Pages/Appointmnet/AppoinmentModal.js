@@ -1,10 +1,11 @@
 import { format } from "date-fns";
 import React, { useContext } from "react";
 import { AuthContext } from "../AuthProvider/AuthProvider";
+import toast from "react-hot-toast";
 
-const AppoinmentModal = ({ modal, selectedDate, setmodal }) => {
+const AppoinmentModal = ({ modal, selectedDate, setmodal, refetch }) => {
   const { name, slots } = modal;
-  const {user} = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
   const handleModal = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -14,6 +15,11 @@ const AppoinmentModal = ({ modal, selectedDate, setmodal }) => {
     const treatment = form.name.value;
     const number = form.number.value;
     const email = form.email.value;
+
+    if (!user?.email) {
+      return toast.error("please login for booking");
+    }
+
     const allInfo = {
       name,
       appointmentDate: date,
@@ -22,8 +28,24 @@ const AppoinmentModal = ({ modal, selectedDate, setmodal }) => {
       number,
       email,
     };
-    console.log(allInfo);
-    setmodal(null);
+    fetch("http://localhost:5000/bookings", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(allInfo),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          console.log(data);
+          toast.success("booking confirmed successfully");
+          setmodal(null);
+          refetch();
+        } else {
+          toast.error(data.message);
+        }
+      });
   };
 
   return (
@@ -56,8 +78,8 @@ const AppoinmentModal = ({ modal, selectedDate, setmodal }) => {
             <input
               type="text"
               name="name"
-              placeholder="Full Name"
               defaultValue={user?.displayName}
+              placeholder="Full Name"
               className="input border border-gray-400 w-full my-3   py-4  "
             />
             <input
@@ -68,9 +90,9 @@ const AppoinmentModal = ({ modal, selectedDate, setmodal }) => {
             />
             <input
               type="email"
+              defaultValue={user?.email}
               placeholder="Email"
               name="email"
-              defaultValue={user?.email}
               className="input border border-gray-400 w-full my-3   py-4  "
             />
           </div>

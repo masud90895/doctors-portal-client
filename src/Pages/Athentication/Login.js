@@ -1,14 +1,16 @@
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 
 const Login = () => {
   const [error, setError] = useState("");
   const [forget, setForget] = useState("");
   const { googleLogin, logInUser, resetPass } = useContext(AuthContext);
-  const nagivate = useNavigate();
+  const navigate  = useNavigate();
+  let location = useLocation();
+  let from = location.state?.from?.pathname || "/";
 
   const {
     formState: { errors },
@@ -23,7 +25,7 @@ const Login = () => {
         const user = result.user;
         console.log(user);
         toast.success("Account Create Successfully");
-        nagivate("/");
+        navigate(from, { replace: true });
       })
       .catch((err) => {
         setError(err.message);
@@ -36,7 +38,7 @@ const Login = () => {
         const user = result.user;
         console.log(user);
         toast.success("Account Create Successfully");
-        nagivate("/");
+        navigate(from, { replace: true });
       })
       .catch((err) => {
         setError(err.message);

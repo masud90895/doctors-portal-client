@@ -1,22 +1,31 @@
 import { format } from "date-fns";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AppoinmentCard from "./AppoinmentCard";
 import AppoinmentModal from "./AppoinmentModal";
+import { useQuery } from "@tanstack/react-query";
+import Loader from "../Shared/Loader"
 
 const AppointmentList = ({ selectedDate }) => {
-  const [options, setOption] = useState([]);
+  // const [options, setOption] = useState([]);
   const [modal, setmodal] = useState(null);
 
   let footer = <p>Please pick a day.</p>;
   if (selectedDate) {
     footer = <p>Available Appointments on {format(selectedDate, "PP")}.</p>;
   }
+  // quary
+  const date = format(selectedDate,"PP")
+  console.log(date);
 
-  useEffect(() => {
-    fetch("AppoinmentOption.json")
-      .then((res) => res.json())
-      .then((data) => setOption(data));
-  }, []);
+  const { data: options = [], refetch ,isLoading} = useQuery({
+    queryKey: ["appinmentOption",date],
+    queryFn: () =>
+      fetch(`http://localhost:5000/appinmentOption?date=${date}`).then((res) => res.json()),
+  });
+
+  if(isLoading){
+    return <Loader/>
+  }
 
   return (
     <div className="mb-[137px]">
@@ -39,6 +48,7 @@ const AppointmentList = ({ selectedDate }) => {
           modal={modal}
           setmodal={setmodal}
           selectedDate={selectedDate}
+          refetch={refetch}
         />
       )}
     </div>
