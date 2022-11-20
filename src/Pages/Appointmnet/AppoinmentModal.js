@@ -78,6 +78,7 @@ const AppoinmentModal = ({ modal, selectedDate, setmodal, refetch }) => {
             <input
               type="text"
               name="name"
+              disabled
               defaultValue={user?.displayName}
               placeholder="Full Name"
               className="input border border-gray-400 w-full my-3   py-4  "
@@ -92,6 +93,7 @@ const AppoinmentModal = ({ modal, selectedDate, setmodal, refetch }) => {
               type="email"
               defaultValue={user?.email}
               placeholder="Email"
+              disabled
               name="email"
               className="input border border-gray-400 w-full my-3   py-4  "
             />

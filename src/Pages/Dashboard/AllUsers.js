@@ -13,6 +13,7 @@ const AllUsers = () => {
   });
 
   const handleMakeAdmin = (id) => {
+    console.log(id);
     fetch(`http://localhost:5000/allusers/admin/${id}`, {
       method: "PUT",
       headers : {
@@ -29,12 +30,15 @@ const AllUsers = () => {
       });
   };
   return (
-    <div>
+    <div className="p-4">
+      <div className="text-left text-3xl font-bold my-6 ">
+        <h1 className="font-serif">All User</h1>
+      </div>
       <div className="overflow-x-auto">
-        <table className="table w-full">
+        <table className="table w-full ">
           {/* <!-- head --> */}
           <thead>
-            <tr>
+            <tr  className="bg-gray-500">
               <th></th>
               <th>Name</th>
               <th>Email</th>

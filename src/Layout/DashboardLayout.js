@@ -19,7 +19,7 @@ const DashboardLayout = () => {
           type="checkbox"
           className="drawer-toggle"
         />
-        <div className="drawer-content">
+        <div className="drawer-content bg-base-200">
           <Outlet />
         </div>
         <div className="drawer-side">
@@ -29,9 +29,17 @@ const DashboardLayout = () => {
               <Link to="/dashboard">My Appointments</Link>
             </li>
             {isAdmin && (
+              <>
               <li>
                 <Link to="/dashboard/allusers">All Users</Link>
               </li>
+              <li>
+                <Link to="/dashboard/adddoctors">Add a Doctor</Link>
+              </li>
+              <li>
+                <Link to="/dashboard/managedoctors">Manage  Doctor</Link>
+              </li>
+              </>
             )}
           </ul>
         </div>

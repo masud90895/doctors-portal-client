@@ -2,16 +2,21 @@ import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { UseToken } from "../../Hooks/UseToken";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 
 const Login = () => {
   const [error, setError] = useState("");
   const [forget, setForget] = useState("");
+  const [LoginUserEmail, setLoginUserEmail] = useState("");
+  const [token] = UseToken(LoginUserEmail);
   const { googleLogin, logInUser, resetPass } = useContext(AuthContext);
   const navigate  = useNavigate();
   let location = useLocation();
   let from = location.state?.from?.pathname || "/";
-
+  if (token) {
+    navigate("/");
+  }
   const {
     formState: { errors },
     register,
@@ -25,7 +30,8 @@ const Login = () => {
         const user = result.user;
         console.log(user);
         toast.success("Account Create Successfully");
-        navigate(from, { replace: true });
+        setLoginUserEmail(user.email);
+        // navigate(from, { replace: true });
       })
       .catch((err) => {
         setError(err.message);

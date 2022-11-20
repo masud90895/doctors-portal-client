@@ -10,6 +10,8 @@ import PriveteRoute from "./PriveteRoute";
 import DashboardLayout from "../Layout/DashboardLayout";
 import AllUsers from "../Pages/Dashboard/AllUsers";
 import AdminRoute from "./AdminRoute";
+import AddADoctor from "../Pages/Dashboard/AddADoctor";
+import ManageDocctors from "../Pages/Dashboard/ManageDocctors";
 
 const router = createBrowserRouter([
   {
@@ -50,7 +52,27 @@ const router = createBrowserRouter([
       { path: "", element: <Dashboard /> },
       {
         path: "/dashboard/allusers",
-        element: <AllUsers />,
+        element: (
+          <AdminRoute>
+            <AllUsers />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/dashboard/adddoctors",
+        element: (
+          <AdminRoute>
+            <AddADoctor />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/dashboard/managedoctors",
+        element: (
+          <AdminRoute>
+            <ManageDocctors />
+          </AdminRoute>
+        ),
       },
     ],
   },
