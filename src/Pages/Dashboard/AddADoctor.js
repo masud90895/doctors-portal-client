@@ -13,7 +13,7 @@ const AddADoctor = () => {
   const { data = [] } = useQuery({
     queryKey: ["appinmentEpecialty"],
     queryFn: () =>
-      fetch("http://localhost:5000/appinmentEpecialty").then((res) =>
+      fetch("https://doctors-portal-server-seven-xi.vercel.app/appinmentEpecialty").then((res) =>
         res.json()
       ),
   });
@@ -45,7 +45,7 @@ const AddADoctor = () => {
 
 
             }
-            fetch("http://localhost:5000/doctors", {
+            fetch("https://doctors-portal-server-seven-xi.vercel.app/doctors", {
                 method: "POST",
                 headers: {
                   "content-type": "application/json",

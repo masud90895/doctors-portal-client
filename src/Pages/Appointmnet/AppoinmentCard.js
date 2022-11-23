@@ -1,7 +1,7 @@
 import React from "react";
 
 const AppoinmentCard = ({ option, setmodal}) => {
-  const { name, slots } = option;
+  const { name, slots ,price} = option;
   return (
     <div className="card  shadow-xl  border border-[#19D3AE]">
       <div className="card-body">
@@ -12,6 +12,7 @@ const AppoinmentCard = ({ option, setmodal}) => {
         <p>
           {slots.length} {slots.length > 1 ? "SPACES" : "SPACE"} AVAILABLE
         </p>
+        <p><small>${price}</small></p>
         <div className="card-actions justify-center">
           {/* <button className="btn border-none bg-gradient-to-r from-[#0FCFEC] to-[#19D3AE]">
             Book Appointment

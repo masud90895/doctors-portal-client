@@ -1,6 +1,7 @@
 import React, { useContext} from "react";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../AuthProvider/AuthProvider";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
@@ -8,7 +9,7 @@ const Dashboard = () => {
     const { data = [] } = useQuery({
     queryKey: ["bookings",user?.email],
     queryFn: async () => {
-     const res= await fetch(`http://localhost:5000/bookings?email=${user?.email}`,{
+     const res= await fetch(`https://doctors-portal-server-seven-xi.vercel.app/bookings?email=${user?.email}`,{
       headers :{
         authorization: `Bearer ${localStorage.getItem('accessToken')}`
       }
@@ -35,6 +36,8 @@ const Dashboard = () => {
               <th>Name</th>
               <th>SERVICE</th>
               <th>TIME</th>
+              <th>Payment</th>
+
             </tr>
           </thead>
           <tbody>
@@ -44,6 +47,17 @@ const Dashboard = () => {
                 <td>{data.patientName}</td>
                 <td>{data.name}</td>
                 <td>{data.slot}</td>
+                <td>{
+                  data.price && !data.paid && <Link to={`/dashboard/payment/${data._id}`}><button className="btn border-none bg-[#19D3AE] btn-sm">Pay</button></Link>
+
+                  
+                  
+                  }
+                  
+                  {
+                    data.price && data.paid && <span className="text-green-500">Paid</span>
+                  }
+                  </td>
                 
                 
               </tr>

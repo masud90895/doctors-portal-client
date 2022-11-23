@@ -20,7 +20,7 @@ const AppointmentList = ({ selectedDate }) => {
   const { data: options = [], refetch ,isLoading} = useQuery({
     queryKey: ["appinmentOption",date],
     queryFn: () =>
-      fetch(`http://localhost:5000/appinmentOption?date=${date}`).then((res) => res.json()),
+      fetch(`https://doctors-portal-server-seven-xi.vercel.app/appinmentOption?date=${date}`).then((res) => res.json()),
   });
 
   if(isLoading){

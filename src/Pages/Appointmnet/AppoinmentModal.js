@@ -4,7 +4,7 @@ import { AuthContext } from "../AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
 
 const AppoinmentModal = ({ modal, selectedDate, setmodal, refetch }) => {
-  const { name, slots } = modal;
+  const { name, slots,price } = modal;
   const { user } = useContext(AuthContext);
   const handleModal = (e) => {
     e.preventDefault();
@@ -27,8 +27,9 @@ const AppoinmentModal = ({ modal, selectedDate, setmodal, refetch }) => {
       patientName: treatment,
       number,
       email,
+      price
     };
-    fetch("http://localhost:5000/bookings", {
+    fetch("https://doctors-portal-server-seven-xi.vercel.app/bookings", {
       method: "POST",
       headers: {
         "content-type": "application/json",

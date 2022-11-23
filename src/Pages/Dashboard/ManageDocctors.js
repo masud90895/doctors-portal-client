@@ -12,7 +12,7 @@ const ManageDocctors = () => {
   } = useQuery({
     queryKey: ["doctors"],
     queryFn: () =>
-      fetch("http://localhost:5000/doctors").then((res) => res.json()),
+      fetch("https://doctors-portal-server-seven-xi.vercel.app/doctors").then((res) => res.json()),
   });
   console.log(data);
 
@@ -30,7 +30,7 @@ const ManageDocctors = () => {
         confirmButtonText: 'Yes, delete it!'
       }).then((result) => {
         if (result.isConfirmed) {
-            fetch(`http://localhost:5000/doctors/${id}`, {
+            fetch(`https://doctors-portal-server-seven-xi.vercel.app/doctors/${id}`, {
         method: "DELETE",
       })
         .then((res) => res.json())

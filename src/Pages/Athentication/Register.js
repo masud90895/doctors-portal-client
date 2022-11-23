@@ -58,7 +58,7 @@ const Register = () => {
 
   const handleSaveUser = (name, email) => {
     const user = { name, email };
-    fetch("http://localhost:5000/users", {
+    fetch("https://doctors-portal-server-seven-xi.vercel.app/users", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -73,7 +73,7 @@ const Register = () => {
   };
 
   /*  const getUserToken=email=>{
-    fetch(`http://localhost:5000/jwt?email=${email}`)
+    fetch(`https://doctors-portal-server-seven-xi.vercel.app/jwt?email=${email}`)
     .then(res=>res.json())
     .then(data=>{
       if(data.accessToken){

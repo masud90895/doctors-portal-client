@@ -6,7 +6,7 @@ export const useAdmin = (email) => {
   useEffect(() => {
     setLoading(true);
     if (email) {
-      fetch(`http://localhost:5000/allusers/admin/${email}`, {
+      fetch(`https://doctors-portal-server-seven-xi.vercel.app/allusers/admin/${email}`, {
         headers: {
           authorization: `bearer ${localStorage.getItem("accessToken")}`,
         },

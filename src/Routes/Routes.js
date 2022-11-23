@@ -12,6 +12,7 @@ import AllUsers from "../Pages/Dashboard/AllUsers";
 import AdminRoute from "./AdminRoute";
 import AddADoctor from "../Pages/Dashboard/AddADoctor";
 import ManageDocctors from "../Pages/Dashboard/ManageDocctors";
+import Payment from "../Pages/Dashboard/Payment";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,7 @@ const router = createBrowserRouter([
         <DashboardLayout />
       </PriveteRoute>
     ),
+    errorElement: <ErrorPage />,
     children: [
       { path: "", element: <Dashboard /> },
       {
@@ -73,6 +75,15 @@ const router = createBrowserRouter([
             <ManageDocctors />
           </AdminRoute>
         ),
+      },
+      {
+        path: "/dashboard/payment/:id",
+        element: (
+          
+            <Payment />
+          
+        ),
+        loader : ({params})=> fetch(`https://doctors-portal-server-seven-xi.vercel.app/dashboard/payment/${params.id}`)
       },
     ],
   },
